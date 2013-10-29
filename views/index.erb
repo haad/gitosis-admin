@@ -1,0 +1,24 @@
+<h1> This is list of know Git repositories in <strong>Innovatrics</strong> </h1>
+<ul>
+<% @repos.keys.each do |repo| %>
+  <li>
+    <dir>
+    <h3><%= repo %></h3>
+    <table>
+    <tr>
+      <td><strong>URL: </strong></td>
+      <td><span>git clone git@ssh.fingera.com:<%= repo %>.git</span></td>
+    </tr>
+    </table>
+    <h4> User List </h4>
+    <ul>
+      <% @repos[repo].split(" ").each do |member| %>
+        <li>
+          <p><%= member %></p>
+        </li>
+      <% end %>
+    </ul>
+    </dir>
+  </li>
+<% end %>
+</ul>

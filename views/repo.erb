@@ -1,0 +1,13 @@
+<h1>This is list of users in <%= @repo %> </h1>
+<ul>
+
+<h2> Git URL </h2>
+<span>git clone git@ssh.fingera.com:<%= @repo %>.git</span>
+
+<h2>List of users</h2>
+<% @members.each do |member| %>
+  <li>
+  <span> <%= member %> </span>
+  </li>
+<% end %>
+</ul>
