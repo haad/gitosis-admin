@@ -32,8 +32,8 @@ class GitosisAdm
     regex2=/members/
 
     File.readlines(@gitosis_config_path).each do |line|
-        repo=line.split("=")[1].lstrip.chomp! if (line[regex]);
-        repos[repo] = line.split("=")[1].lstrip.chomp! if (line[regex2])
+        repo=line.split("=")[1].lstrip.chomp! if (line[regex])
+        repos[repo.to_sym] = line.split("=")[1].lstrip.chomp! if (line[regex2])
     end
 
     return repos
@@ -44,13 +44,12 @@ gitosis=GitosisAdm.new(settings.gitosis_config_file_path)
 
 get '/' do
   @repos = gitosis.get_repo_hash
-
   erb :index
 end
 
-get '/repos/:id' do
-  puts "Asking for details about "+params[:id]
-  @members = gitosis.get_repo_members(params[:id])
-  @repo = params[:id]
-  erb :repo
-end
+#get '/repos/:id' do
+# puts "Asking for details about "+params[:id]
+#  @members = gitosis.get_repo_members(params[:id])
+#  @repo = params[:id]
+#  erb :repo
+#end
