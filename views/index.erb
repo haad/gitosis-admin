@@ -1,32 +1,76 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<title>Innovatrics gitosis admin interface </title>
-</head>
+	<title>Innovatrics Gitosis Admin Interface </title>
+	<link href="stylesheets/main.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="stylesheets/animate.css" media="screen" rel="stylesheet" type="text/css" />
 
+	<script src="javascripts/jquery-1.10.2.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('.repo').on('click', function() {
+				var details = $(this).next();
+				details.show();
+				details.children().addClass('animated flipInX');
+				setTimeout(function() { details.children().removeClass('animated flipInX'); }, 350);
+			});
+			$('.details a').on('click', function() {
+				var details = $(this).parents('li');
+				details.children().addClass('animated flipOutX');
+				setTimeout(function() {
+					details.children().removeClass('animated flipOutX');
+					details.hide();
+				}, 350);
+			});
+		});
+	</script>
+</head>
 <body>
-<h1> This is list of known Git repositories in <strong>Innovatrics</strong> </h1>
-<ul>
-<% @repos.keys.each do |repo| %>
-  <li>
-    <h3><%= repo %></h3>
-    <table>
-    <tr>
-      <td><strong>URL: </strong></td>
-      <td><span>git clone git@ssh.fingera.com:<%= repo %>.git</span></td>
-    </tr>
-    </table>
-    <h4> User List </h4>
-    <ul>
-      <% @repos[repo].split(" ").each do |member| %>
-        <li>
-          <p><%= member %></p>
-        </li>
-      <% end %>
-    </ul>
-  </li>
-<% end %>
-</ul>
+	<header>
+		<h1>
+			Git repositories @ <strong>Innovatrics</strong>
+		</h1>
+	</header>
+
+	<section id="content">
+		<ul>
+			<% @repos.keys.each do |repo| %>
+				<li class="repo">
+					<h3><%= repo %></h3>
+				</li>
+
+				<li class="details">
+					<div class="window">
+						<h3><%= repo %></h3>
+						<section>
+							<div class="item">
+								<label>URL:</label>
+								<span>
+									git clone git@ssh.fingera.com:<%= repo %>.git
+								</span>
+							</div>
+							<div class="item">
+								<label>Users:</label>
+								<span>
+									<ul>
+										<% @repos[repo].split(" ").each do |member| %>
+											<li>
+												<%= member %>
+											</li>
+										<% end %>
+									</ul>
+								</span>
+							</div>
+						</section>
+						<a>Close</a>
+					</div>
+				</li>
+			<% end %>
+		</ul>
+	</section>
+
+	<footer>
+		The End
+	</footer>
 </body>
 </html>
